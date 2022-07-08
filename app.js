@@ -17,15 +17,18 @@ const runError = (className) => {
     }, 1000);
 }
 
-const toggleErrorMessage = (error) => {
-    error.innerText = (error.innerText === "") ? "숫자만 입력하세요" : "";
-}
+var value = "";
 
-number1.addEventListener("change", (event) => {
-    console.log(event)
-    if (checkNumber(event.target.value)) {
-        error1.InnerText = "";
-        event.target.value = event.target.value.padStart(4, "0");
+number1.addEventListener("keypress", (event) => {
+    event.preventDefault();
+    if (checkNumber(event.target.value) || event.target.value == "") {
+        if (event.target.value < 999){
+            error1.InnerText = "";
+            value += event.key
+            event.target.value = value.padStart(4, "0");
+        } else {
+            alert("4글자 이하로 입력하세요!")
+        }
     } else {
         runError(number1)
         runError(error1)
@@ -34,6 +37,7 @@ number1.addEventListener("change", (event) => {
 })
 
 btn1.addEventListener("click", (event) => {
+    console.log(number1.value);
     event.preventDefault();
-    number1.innerText="";
+    number1.value = "";
 })
